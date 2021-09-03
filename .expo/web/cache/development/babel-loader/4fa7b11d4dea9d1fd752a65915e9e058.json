@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from \"./Message\";","map":{"version":3,"sources":["/Users/admin/Documents/SignalClone/components/Message/index.ts"],"names":["default"],"mappings":"AAAA,SAASA,OAAT","sourcesContent":["export { default } from './Message';"]},"metadata":{},"sourceType":"module"}
