@@ -14,7 +14,7 @@ export const schema = {
                     "name": "content",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "userID": {
@@ -119,11 +119,11 @@ export const schema = {
                         "associatedWith": "chatroomID"
                     }
                 },
-                "ChatRoomUsers": {
-                    "name": "ChatRoomUsers",
+                "users": {
+                    "name": "users",
                     "isArray": true,
                     "type": {
-                        "model": "ChatRoomUser"
+                        "model": "UserChatRoom"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -159,8 +159,8 @@ export const schema = {
                 }
             ]
         },
-        "ChatRoomUser": {
-            "name": "ChatRoomUser",
+        "UserChatRoom": {
+            "name": "UserChatRoom",
             "fields": {
                 "id": {
                     "name": "id",
@@ -168,19 +168,6 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
-                },
-                "chatroom": {
-                    "name": "chatroom",
-                    "isArray": false,
-                    "type": {
-                        "model": "ChatRoom"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "chatroomID"
-                    }
                 },
                 "user": {
                     "name": "user",
@@ -194,10 +181,23 @@ export const schema = {
                         "connectionType": "BELONGS_TO",
                         "targetName": "userID"
                     }
+                },
+                "chatroom": {
+                    "name": "chatroom",
+                    "isArray": false,
+                    "type": {
+                        "model": "ChatRoom"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "chatroomID"
+                    }
                 }
             },
             "syncable": true,
-            "pluralName": "ChatRoomUsers",
+            "pluralName": "UserChatRooms",
             "attributes": [
                 {
                     "type": "model",
@@ -208,20 +208,20 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byChatRoom",
+                        "name": "byUser",
                         "fields": [
-                            "chatroomID",
-                            "userID"
+                            "userID",
+                            "chatroomID"
                         ]
                     }
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUser",
+                        "name": "byChatRoom",
                         "fields": [
-                            "userID",
-                            "chatroomID"
+                            "chatroomID",
+                            "userID"
                         ]
                     }
                 },
@@ -297,11 +297,11 @@ export const schema = {
                         "associatedWith": "userID"
                     }
                 },
-                "chatrooms": {
-                    "name": "chatrooms",
+                "UserChatRooms": {
+                    "name": "UserChatRooms",
                     "isArray": true,
                     "type": {
-                        "model": "ChatRoomUser"
+                        "model": "UserChatRoom"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -340,5 +340,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "8a3c0c2b4c725e94fecef32b29fddae5"
+    "version": "ae1d46f6161e9b59db01622cbe7bc327"
 };

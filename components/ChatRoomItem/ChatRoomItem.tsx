@@ -4,10 +4,9 @@ import { useNavigation } from '@react-navigation/core';
 import styles from './styles';
 
 export default function ChatRoomItem({ chatRoom }) {
-  const user = chatRoom.users[1];
+  const user = chatRoom.users[1];  
 
   const navigation = useNavigation();
-
   const onPress = () => {
     console.warn('pressed on ', user.name)
     navigation.navigate('ChatRoom', { id: chatRoom.id });

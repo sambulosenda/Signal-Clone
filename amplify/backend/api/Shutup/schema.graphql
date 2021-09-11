@@ -1,0 +1,31 @@
+type Message @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields: ["userID"]) @key(name: "byChatRoom", fields: ["chatroomID"]) {
+  id: ID!
+  content: String!
+  userID: ID
+  chatroomID: ID
+}
+
+type ChatRoom @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  newMessages: Int
+  LastMessage: Message @connection
+  Messages: [Message] @connection(keyName: "byChatRoom", fields: ["id"])
+  users: [UserChatRoom] @connection(keyName: "byChatRoom", fields: ["id"])
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  imageUri: String
+  status: String
+  Messages: [Message] @connection(keyName: "byUser", fields: ["id"])
+  UserChatRooms: [UserChatRoom] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type UserChatRoom @model(queries: null) @key(name: "byUser", fields: ["userID", "chatroomID"]) @key(name: "byChatRoom", fields: ["chatroomID", "userID"]) @auth(rules: [{allow: public}, {allow: public}]) {
+  id: ID!
+  userID: ID!
+  chatroomID: ID!
+  user: User! @connection(fields: ["userID"])
+  chatroom: ChatRoom! @connection(fields: ["chatroomID"])
+}

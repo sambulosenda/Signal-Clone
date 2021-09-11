@@ -2,8 +2,8 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "Shut",
-  "version": "3.0",
+  "projectName": "Shutup",
+  "version": "3.1",
   "frontend": "javascript",
   "javascript": {
     "framework": "react-native",
