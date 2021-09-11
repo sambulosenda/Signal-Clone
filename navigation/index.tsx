@@ -3,10 +3,10 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName, View, Text, Image, useWindowDimensions } from 'react-native';
+import { ColorSchemeName, View, Text, Image, Pressable, useWindowDimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons'; 
 
 import { RootStackParamList } from '../types';
@@ -14,6 +14,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 
 import ChatRoomScreen from '../screens/ChatRoomScreen';
 import HomeScreen from '../screens/HomeScreen';
+import UsersScreen from '../screens/UsersScreen';
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -46,6 +47,14 @@ function RootNavigator() {
           headerBackTitleVisible: false,
         }} 
       />
+
+       <Stack.Screen 
+        name="UserScreen" 
+        component={UsersScreen}         
+        options={{ 
+          headerTitle: "Users", 
+        }} 
+      />
    
     </Stack.Navigator>
   );
@@ -53,7 +62,7 @@ function RootNavigator() {
 
 const HomeHeader = (props) => {
   const { width } = useWindowDimensions();
-
+ const navigation = useNavigation();
   return (
     <View style={{ 
       flexDirection: 'row',
@@ -68,7 +77,9 @@ const HomeHeader = (props) => {
       />
       <Text style={{flex: 1, textAlign: 'center', marginLeft: 50, fontWeight: 'bold'}}>Signal</Text>
       <Feather name="camera" size={24} color="black" style={{ marginHorizontal: 10}} />
+      <Pressable onPress={() => navigation.navigate('UserScreen')}> 
       <Feather name="edit-2" size={24} color="black" style={{ marginHorizontal: 10}} />
+      </Pressable>
     </View>
   )
 };
