@@ -9,17 +9,33 @@ import {
 } from "react-native";
 import ChatRoomItem from "../components/ChatRoomItem";
 
-import chatRoomsData from "../assets/dummy-data/ChatRooms";
 import { Auth } from "aws-amplify";
+import { useState, useEffect } from "react";
+import { ChatRoom } from "../src/models";
+import { DataStore } from "@aws-amplify/datastore";
 
 export default function TabOneScreen() {
+
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+
+
+  useEffect(() => {
+   const fetchChatRooms = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      const chatRooms = await DataStore.query(ChatRoom)
+      setChatRooms(chatRooms);
+    }
+    fetchChatRooms();
+  }, [])
+
+
   const logout = () => {
     Auth.signOut();
   };
   return (
     <View style={styles.page}>
       <FlatList
-        data={chatRoomsData}
+        data={chatRooms}
         renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
         showsVerticalScrollIndicator={false}
       />
