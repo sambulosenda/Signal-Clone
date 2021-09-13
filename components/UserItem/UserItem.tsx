@@ -8,8 +8,19 @@ import Auth from "@aws-amplify/auth";
 
 export default function UserItem({ user }) {
   const navigation = useNavigation();
+  
+
+
+
 
   const onPress = async () => {
+
+  //TODO if there is already a chat room between the two users, then go to that chat room
+  //otherwise create a new chat room and go to that chat room
+  
+
+  
+
     //create a new chatroom
     const newChatRoom = await DataStore.save(new ChatRoom({ newMessages: 0 }));
 
