@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Text, Image, View, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { DataStore } from '@aws-amplify/datastore';
-import { UserChatRoom, User, Message } from '../../src/models';
+import { git , User, Message } from '../../src/models';
 import styles from './styles';
 import Auth from '@aws-amplify/auth';
 
