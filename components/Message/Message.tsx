@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto'
   },
   rightContainer: {
-    backgroundColor: grey,
+    backgroundColor: "#f7f7f7",
     marginLeft: 'auto',
     marginRight: 10,
   }

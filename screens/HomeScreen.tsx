@@ -1,12 +1,10 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 
-import { Text, View, StyleSheet, FlatList, Pressable } from "react-native";
-import ChatRoomItem from "../components/ChatRoomItem";
+import { Text, Image, Pressable, View, StyleSheet, FlatList } from 'react-native';
+import { Auth, DataStore } from 'aws-amplify';
+import { ChatRoom, UserChatRoom } from '../src/models';
+import ChatRoomItem from '../components/ChatRoomItem';
 
-import { Auth, DataStore } from "aws-amplify";
-import { useState, useEffect } from "react";
-import { ChatRoom } from "../src/models";
-import { UserChatRoom } from "../src/models";
 
 export default function TabOneScreen() {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
@@ -15,51 +13,36 @@ export default function TabOneScreen() {
     const fetchChatRooms = async () => {
       const userData = await Auth.currentAuthenticatedUser();
 
-      const chatRooms = (await DataStore.query(UserChatRoom ))
-        .filter(chatRoomUser => chatRoomUser.user.id === userData.attributes.sub)
-        .map(chatRoomUser => chatRoomUser.chatroom);
+      const chatRooms = (await DataStore.query(UserChatRoom))
+        .filter(UserChatRoom => UserChatRoom.user.id === userData.attributes.sub)
+        .map(UserChatRoom => UserChatRoom.chatroom);
 
       setChatRooms(chatRooms);
     };
     fetchChatRooms();
   }, []);
 
-  
-  const logout = () => {
+  const logOut = () => {
     Auth.signOut();
-  };
+  }
+
   return (
     <View style={styles.page}>
-     <FlatList
+       <FlatList 
         data={chatRooms}
         renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
         showsVerticalScrollIndicator={false}
       />
-
-      <Pressable onPress={logout} style={styles.button}>
-        <Text style={styles.text}>Sign out</Text>
-      </Pressable>
+      {/* <Pressable onPress={logOut} style={{backgroundColor: 'red', height: 50, margin: 10, borderRadius: 50, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Logout</Text>
+      </Pressable> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "white",
-    flex: 1,
-  },
-  button: {
-    backgroundColor: "red",
-    marginBottom: 20,
-    marginHorizontal: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    alignItems: "center",
-    borderRadius: 10,
-  },
-  text: {
-    fontWeight: "bold",
-    color: "white",
-    fontSize: 20,
-  },
+    backgroundColor: 'white',
+    flex: 1
+  }
 });
